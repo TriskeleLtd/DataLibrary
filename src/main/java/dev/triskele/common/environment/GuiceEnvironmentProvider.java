@@ -61,7 +61,7 @@ public class GuiceEnvironmentProvider implements EnvironmentProvider {
 
                     EnvironmentPath path = method.getAnnotation(EnvironmentPath.class);
                     String rawMethod = "public " + method.getReturnType().getSimpleName() + " " + method.getName() + "() {" +
-                            "String rawValue = System.getenv(\"" + path.path() + "\");" +
+                            "String rawValue = System.getenv(\"" + path.value() + "\");" +
                             "if (rawValue == null || rawValue.isEmpty()) {" +
                             "return " + (path.defaultValue().isEmpty() ? PRIMITIVE_TO_FUNCTION.getOrDefault(method.getReturnType(), str -> str).apply("\"\"")
                             : PRIMITIVE_TO_FUNCTION.getOrDefault(method.getReturnType(), str -> str).apply(path.defaultValue())) + ";" +
