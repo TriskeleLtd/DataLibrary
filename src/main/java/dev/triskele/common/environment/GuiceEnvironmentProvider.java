@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class CoreEnvironmentProvider implements EnvironmentProvider {
+public class GuiceEnvironmentProvider implements EnvironmentProvider {
 
     public static final Map<Class<?>, Function<String, Object>> PRIMITIVE_TO_FUNCTION = Maps.newHashMap();
     private static final Map<Class<?>, Object> CLASS_TO_ENVIRONMENT = Maps.newHashMap();
@@ -30,7 +30,7 @@ public class CoreEnvironmentProvider implements EnvironmentProvider {
     private final Binder binder;
     private final ClassPool classPool;
 
-    public CoreEnvironmentProvider(final @NotNull Binder binder) {
+    public GuiceEnvironmentProvider(final @NotNull Binder binder) {
         Validate.notNull(binder, "Guice Binder cannot be null.");
 
         this.binder = binder;
