@@ -13,14 +13,17 @@ import java.util.Collection;
 public sealed interface ReflectiveElementConstructor<A extends Annotation, T extends ReflectiveDataType<T, ?, O, ?>, O extends ReflectedDataObject<T, ?, O, ?>> permits NoAnnotationReflectiveElementConstructor, AnnotationReflectiveElementConstructor {
 
     @SafeVarargs
-    static <T extends ReflectiveDataType<T, ?, O, ?>, O extends ReflectedDataObject<T, ?, O, ?>> @NotNull ReflectiveElementConstructor<?, T, O> combine(@NotNull ReflectiveElementConstructor<?, T, O>... elementConstructors) {
+    @NotNull
+    static <T extends ReflectiveDataType<T, ?, O, ?>, O extends ReflectedDataObject<T, ?, O, ?>> ReflectiveElementConstructor<?, T, O> combine(@NotNull ReflectiveElementConstructor<?, T, O>... elementConstructors) {
         return new CombinedElementConstructor<>(elementConstructors);
     }
 
     @SuppressWarnings("unchecked")
-    default <E> @NotNull Collection<DataElement<T, O, E>> constructDataElements(@NotNull ReflectiveGetterSetter<O, E> getterSetter) {
+    @NotNull
+    default <E> Collection<DataElement<T, O, E>> constructDataElements(@NotNull ReflectiveGetterSetter<O, E> getterSetter) {
         return this.constructDataElements(getterSetter, (A) new EmptyAnnotation());
     }
 
-    <E> @NotNull Collection<DataElement<T, O, E>> constructDataElements(@NotNull ReflectiveGetterSetter<O, E> getterSetter, @NotNull A annotation);
+    @NotNull
+    <E> Collection<DataElement<T, O, E>> constructDataElements(@NotNull ReflectiveGetterSetter<O, E> getterSetter, @NotNull A annotation);
 }

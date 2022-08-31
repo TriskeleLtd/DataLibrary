@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.m4xy.dataapi.api.data.element.DataElement;
 import uk.m4xy.dataapi.api.data.element.exception.DataNotLoadedException;
+import uk.m4xy.dataapi.api.data.element.exception.DataUnmodifiableException;
 import uk.m4xy.dataapi.api.data.element.type.DataField;
 import uk.m4xy.dataapi.api.data.reflect.ReflectedDataObject;
 import uk.m4xy.dataapi.api.data.reflect.gettersetter.ReflectiveGetterSetter;
@@ -31,12 +32,18 @@ public class ReflectiveDataElement<T extends ReflectiveDataType<T, ?, O, ?>, O e
     }
 
     @Override
-    public @NotNull DataField newImplementation(@NotNull O object, @Nullable E value) {
-        return new ReflectiveDataField<>(object, getterSetter);
+    public @NotNull Type getType() {
+        return this.type;
+    }
+
+    @NotNull
+    @Override
+    public DataField<E> getDataField(@NotNull O data) {
+        return new ReflectiveDataField<>(data, this.getterSetter);
     }
 
     @Override
-    public @NotNull Type getType() {
-        return this.type;
+    public void setDataField(@NotNull O data, @Nullable E value) throws DataUnmodifiableException {
+        this.getterSetter.set(data, value);
     }
 }

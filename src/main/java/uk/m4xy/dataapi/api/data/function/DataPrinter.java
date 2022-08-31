@@ -1,6 +1,5 @@
 package uk.m4xy.dataapi.api.data.function;
 
-import org.checkerframework.checker.units.qual.K;
 import org.jetbrains.annotations.NotNull;
 import uk.m4xy.dataapi.api.data.Data;
 import uk.m4xy.dataapi.api.data.DataType;

@@ -1,13 +1,11 @@
-package uk.m4xy.dataapi.impl.data.tree;
+package uk.m4xy.dataapi.api.data.persist.leveled;
 
 import org.jetbrains.annotations.Nullable;
 import uk.m4xy.dataapi.api.data.Data;
 import uk.m4xy.dataapi.api.data.DataType;
 import uk.m4xy.dataapi.api.data.cache.DataCache;
 import uk.m4xy.dataapi.api.data.element.DataElement;
-import uk.m4xy.dataapi.api.data.persist.loader.DataLoader;
-import uk.m4xy.dataapi.api.data.persist.saver.DataSaver;
-import uk.m4xy.dataapi.api.data.tree.LoadLevel;
+import uk.m4xy.dataapi.api.data.persist.DataSaver;
 
 public abstract class LeveledDataType<T extends LeveledDataType<T, K, D, L>, K, D extends Data<T, K, D>, L extends Enum<L> & LoadLevel> implements DataType<T, K, D> {
 
@@ -37,7 +35,7 @@ public abstract class LeveledDataType<T extends LeveledDataType<T, K, D, L>, K, 
     }
 
     @Override
-    public @Nullable DataLoader<T, K, D> getDataLoader() {
+    public @Nullable LeveledDataLoader<T, K, D, L> getDataLoader() {
         return null;
     }
 

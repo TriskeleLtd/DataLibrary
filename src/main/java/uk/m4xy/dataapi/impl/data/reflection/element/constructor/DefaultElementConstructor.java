@@ -1,16 +1,15 @@
 package uk.m4xy.dataapi.impl.data.reflection.element.constructor;
 
-import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.NotNull;
-import uk.m4xy.dataapi.api.data.DataType;
 import uk.m4xy.dataapi.api.data.element.DataElement;
 import uk.m4xy.dataapi.api.data.reflect.ReflectedDataObject;
 import uk.m4xy.dataapi.api.data.reflect.gettersetter.ReflectiveGetterSetter;
+import uk.m4xy.dataapi.api.data.reflect.gettersetter.TypedFieldWrapper;
 import uk.m4xy.dataapi.impl.data.reflection.ReflectiveDataType;
-import uk.m4xy.dataapi.impl.data.reflection.element.constructor.annotation.EmptyAnnotation;
+import uk.m4xy.dataapi.impl.data.reflection.element.ReflectiveDataElement;
+import uk.m4xy.dataapi.impl.data.reflection.element.constructor.annotation.ReflectiveElementTypeDefinition;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Function;
@@ -32,5 +31,13 @@ public class DefaultElementConstructor<T extends ReflectiveDataType<T, ?, O, ?>,
             return (Collection<DataElement<T, O, E>>) elementConstructor.apply(getterSetter);
         }
         return Collections.emptyList();
+    }
+
+    public static <T extends ReflectiveDataType<T, ?, O, ?>, O extends ReflectedDataObject<T, ?, O, ?>> DefaultElementConstructor<T, O> get() {
+        return new DefaultElementConstructor<>(
+                getterSetter -> getterSetter instanceof TypedFieldWrapper fieldWrapper
+                        && Arrays.stream(fieldWrapper.getField().getAnnotations())
+                        .noneMatch(a -> a.getClass().isAnnotationPresent(ReflectiveElementTypeDefinition.class)),
+                ReflectiveDataElement::new);
     }
 }

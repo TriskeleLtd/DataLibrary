@@ -1,29 +1,27 @@
 package uk.m4xy.dataapi.impl.data.reflection;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.m4xy.dataapi.api.data.cache.DataCache;
 import uk.m4xy.dataapi.api.data.element.DataElement;
 import uk.m4xy.dataapi.api.data.element.exception.DataNotLoadedException;
 import uk.m4xy.dataapi.api.data.reflect.ReflectedDataObject;
-import uk.m4xy.dataapi.api.data.reflect.annotation.Id;
-import uk.m4xy.dataapi.api.data.reflect.annotation.Key;
+import uk.m4xy.dataapi.api.data.annotation.Id;
+import uk.m4xy.dataapi.api.data.annotation.Key;
 import uk.m4xy.dataapi.api.data.reflect.exception.AnnotationNotPresentError;
 import uk.m4xy.dataapi.api.data.reflect.gettersetter.ReflectiveGetterSetter;
 import uk.m4xy.dataapi.api.data.reflect.gettersetter.ReflectiveGetterSetterPointer;
 import uk.m4xy.dataapi.api.data.reflect.gettersetter.TypedFieldWrapper;
-import uk.m4xy.dataapi.api.data.tree.LoadLevel;
+import uk.m4xy.dataapi.api.data.persist.leveled.LoadLevel;
 import uk.m4xy.dataapi.impl.data.reflection.element.ReflectiveDataElement;
 import uk.m4xy.dataapi.impl.data.reflection.element.constructor.ReflectiveElementConstructor;
-import uk.m4xy.dataapi.impl.data.tree.LeveledDataType;
+import uk.m4xy.dataapi.api.data.persist.leveled.LeveledDataType;
 import uk.m4xy.dataapi.impl.util.reflection.ReflectionUtil;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class ReflectiveDataType<
@@ -82,7 +80,7 @@ public abstract class ReflectiveDataType<
 
     @Override
     public DataElement<T, O, Long> getIdElement() {
-        return new ReflectiveDataElement<>(); // TODO
+        return new ReflectiveDataElement<>(this.idField);
     }
 
     @Override
@@ -95,7 +93,8 @@ public abstract class ReflectiveDataType<
     }
 
     @SuppressWarnings("unchecked")
-    public <E> @Nullable ReflectiveGetterSetter<O, E> getModifier(@NotNull DataElement<T, O, E> element) {
+    @Nullable
+    public <E> ReflectiveGetterSetter<O, E> getModifier(@NotNull DataElement<T, O, E> element) {
         return (ReflectiveGetterSetter<O, E>) this.modifiers.get(element);
     }
 
@@ -113,11 +112,6 @@ public abstract class ReflectiveDataType<
         if (id == null || id == -1L) throw new DataNotLoadedException();
 
         return id;
-    }
-
-    @Override
-    public @NotNull Set<DataElement<T, O, ?>> getDeclaredDataElements() {
-        return this.modifiers.keySet();
     }
 
     public @NotNull Class<O> getObjectClass() {

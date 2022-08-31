@@ -2,13 +2,13 @@ package uk.m4xy.dataapi.test.tree;
 
 import uk.m4xy.dataapi.api.data.reference.DataReference;
 import uk.m4xy.dataapi.api.data.reflect.ReflectedDataObject;
-import uk.m4xy.dataapi.api.data.reflect.annotation.Id;
-import uk.m4xy.dataapi.api.data.reflect.annotation.Key;
+import uk.m4xy.dataapi.api.data.annotation.Id;
+import uk.m4xy.dataapi.api.data.annotation.Key;
 import uk.m4xy.dataapi.impl.data.reflection.element.constructor.sql.SQLElement;
 import uk.m4xy.dataapi.impl.data.reflection.element.constructor.sql.SQLReference;
 
-public class FactionData extends ReflectedDataObject<FactionDataType, String, FactionData, FactionDataType.LoadLevels> {
 
+public class FactionData extends ReflectedDataObject<FactionDataType, String, FactionData, FactionDataType.LoadLevels> {
     @Key
     @SQLElement
     String name;

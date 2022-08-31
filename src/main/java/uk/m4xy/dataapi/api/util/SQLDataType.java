@@ -1,8 +1,14 @@
 package uk.m4xy.dataapi.api.util;
 
+import java.sql.JDBCType;
 import java.sql.SQLType;
+import java.sql.Types;
 
 public enum SQLDataType implements SQLType {
+
+    VARCHAR(Types.VARCHAR),
+    BIG_INT(Types.BIGINT),
+    BOOLEAN(Types.BOOLEAN),
 
     ;
 

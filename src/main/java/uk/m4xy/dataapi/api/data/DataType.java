@@ -3,15 +3,11 @@ package uk.m4xy.dataapi.api.data;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.m4xy.dataapi.api.data.cache.DataCache;
-import uk.m4xy.dataapi.api.data.element.DataElement;
 import uk.m4xy.dataapi.api.data.element.exception.DataNotLoadedException;
 import uk.m4xy.dataapi.api.data.function.DataPrinter;
-import uk.m4xy.dataapi.api.data.persist.loader.DataLoader;
-import uk.m4xy.dataapi.api.data.persist.saver.DataSaver;
+import uk.m4xy.dataapi.api.data.persist.DataLoader;
+import uk.m4xy.dataapi.api.data.persist.DataSaver;
 import uk.m4xy.dataapi.api.data.tree.DataTree;
-
-import java.util.List;
-import java.util.Set;
 
 public interface DataType<T extends DataType<T, K, D>, K, D extends Data<T, K, D>> {
 
@@ -32,7 +28,5 @@ public interface DataType<T extends DataType<T, K, D>, K, D extends Data<T, K, D
     default @Nullable DataTree<T, K, D> getDataTree() {
         return null;
     }
-
-    @NotNull Set<DataElement<T, D, ?>> getDeclaredDataElements();
 
 }

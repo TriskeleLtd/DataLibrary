@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.m4xy.dataapi.api.data.Data;
 import uk.m4xy.dataapi.api.data.DataType;
-import uk.m4xy.dataapi.api.data.persist.loader.DataLoader;
+import uk.m4xy.dataapi.api.data.persist.DataLoader;
 import uk.m4xy.dataapi.api.util.EventSupplier;
 
 import java.util.function.Consumer;

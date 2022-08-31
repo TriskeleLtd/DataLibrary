@@ -10,9 +10,15 @@ import uk.m4xy.dataapi.api.data.reference.Referenceable;
 
 public interface Data<T extends DataType<T, K, D>, K, D extends Data<T, K, D>> extends Referenceable {
     @Nullable
-    <E> DataField getDataField(@NotNull DataElement<T, D, E> dataElement);
+    @SuppressWarnings("unchecked")
+    default <E> DataField<E> getDataField(@NotNull DataElement<T, D, E> dataElement) {
+        return dataElement.getDataField((D) this);
+    }
 
-    <E> void setDataField(@NotNull DataElement<T, D, E> dataElement, @Nullable E value) throws DataUnmodifiableException;
+    @SuppressWarnings("unchecked")
+    default <E> void setDataField(@NotNull DataElement<T, D, E> dataElement, @Nullable E value) throws DataUnmodifiableException {
+        dataElement.setDataField((D) this, value);
+    }
 
     @NotNull
     K getKey() throws DataNotLoadedException;
