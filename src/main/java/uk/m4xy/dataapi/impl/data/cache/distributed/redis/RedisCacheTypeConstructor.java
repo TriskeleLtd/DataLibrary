@@ -6,22 +6,21 @@ import uk.m4xy.dataapi.api.data.DataType;
 import uk.m4xy.dataapi.api.data.DataTypeInitializer;
 import uk.m4xy.dataapi.api.data.annotation.type.TypeConstructor;
 import uk.m4xy.dataapi.api.data.cache.CacheExpiry;
-import uk.m4xy.dataapi.api.distributions.Distribution;
-import uk.m4xy.dataapi.api.util.RedisInformation;
+import uk.m4xy.dataapi.impl.TypeInjector;
 
 public class RedisCacheTypeConstructor implements TypeConstructor<AnnotatedRedisCache> {
-
-
     @Override
     public <T extends DataType<T, K, D>, K, D extends Data<T, K, D>>
     void apply(@NotNull AnnotatedRedisCache annotation,
                @NotNull DataTypeInitializer<T, K, D> initializer) {
+
         initializer.setDataCache(
                 new RedisCache<>(
                         initializer.getKeyType(),
-                        Distribution.getInstance(),
+                        TypeInjector.get(annotation.distribution()),
                         new CacheExpiry(annotation.cacheExpiry()),
-                        RedisInformation.get()
+                        TypeInjector.get(annotation.serverPath()),
+                        annotation.channel()
                 ));
     }
 }

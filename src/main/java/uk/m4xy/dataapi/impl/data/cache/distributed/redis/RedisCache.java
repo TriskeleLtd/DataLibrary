@@ -14,7 +14,6 @@ import uk.m4xy.dataapi.api.data.cache.exception.KeyNotInCacheException;
 import uk.m4xy.dataapi.api.data.cache.maintenance.CacheMaintainer;
 import uk.m4xy.dataapi.api.distributions.Distribution;
 import uk.m4xy.dataapi.api.type.StringTypeConverter;
-import uk.m4xy.dataapi.api.util.RedisInformation;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,7 +30,11 @@ public class RedisCache<T extends DataType<T, K, D>, K, D extends Data<T, K, D>>
 
     private final Distribution distribution;
 
-    public RedisCache(Class<K> keyType, Distribution distribution, CacheExpiry cacheExpiry, RedisInformation redisInformation) {
+    public RedisCache(@NotNull Class<K> keyType,
+                      @NotNull Distribution distribution,
+                      @NotNull CacheExpiry cacheExpiry,
+                      @NotNull RedisServerPath serverPath,
+                      @NotNull String channel) {
         this.keyType = keyType;
         this.distribution = distribution;
 
@@ -40,9 +43,9 @@ public class RedisCache<T extends DataType<T, K, D>, K, D extends Data<T, K, D>>
 
         this.cacheExpiry = cacheExpiry;
 
-        this.jedisPool = redisInformation.createPool();
+        this.jedisPool = serverPath.initializePool();
 
-        this.channel = redisInformation.getChannel();
+        this.channel = channel;
 
         this.lock = new ReentrantReadWriteLock();
 
