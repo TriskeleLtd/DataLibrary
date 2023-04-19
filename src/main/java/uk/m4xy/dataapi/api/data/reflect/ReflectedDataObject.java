@@ -8,6 +8,8 @@ import uk.m4xy.dataapi.api.data.element.exception.DataNotLoadedException;
 import uk.m4xy.dataapi.api.data.persist.leveled.LoadLevel;
 import uk.m4xy.dataapi.impl.data.reflection.ReflectiveDataType;
 
+import java.util.ArrayList;
+
 public abstract class ReflectedDataObject<
         T extends ReflectiveDataType<T, K, O, L>,
         K,

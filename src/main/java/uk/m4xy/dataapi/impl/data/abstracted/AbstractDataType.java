@@ -7,6 +7,7 @@ import uk.m4xy.dataapi.api.data.annotation.Id;
 import uk.m4xy.dataapi.api.data.annotation.Key;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
 public abstract class AbstractDataType<T extends AbstractDataType<T, K, D, E>, K, D extends AbstractDataStore<T, K, D>, E> implements DataType<T, K, D> {
 

@@ -24,7 +24,7 @@ public class PlainCacheEntry<T extends DataType<T, K, D>, K, D extends Data<T, K
     @Nullable
     private transient D data;
 
-    public PlainCacheEntry(D data) {
+    public PlainCacheEntry(@NotNull D data) {
         this(CacheExpiry.NEVER, data.getId(), data.getKey(), data);
     }
 

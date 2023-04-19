@@ -8,10 +8,10 @@ import uk.m4xy.dataapi.api.data.element.exception.DataNotLoadedException;
 import uk.m4xy.dataapi.api.data.element.exception.DataUnmodifiableException;
 import uk.m4xy.dataapi.api.data.element.type.DataField;
 
+import javax.inject.Inject;
 import java.util.UUID;
 
 public class User implements Data<UserDataType, UUID, User> {
-
     DataField<UUID> keyField;
     DataField<Long> idField;
     @Nullable
